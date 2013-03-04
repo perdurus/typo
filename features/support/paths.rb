@@ -15,8 +15,25 @@ module NavigationHelpers
 
     when /^the home\s?page$/
       '/'
+
+    when /^the admin page$/
+      '/admin'
+
     when /^the new article page$/
       '/admin/content/new'
+
+    when /^the edit page for "(.*)"$/
+      article = Article.find_by_title $1
+      '/admin/content/edit/#{article.id}'
+
+    when /^the manage articles page$/
+      '/admin/content'
+
+    when /^user login page$/
+      '/accounts/login'
+
+    when /^user logout page$/
+      'accounts/logout'
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:

@@ -1,0 +1,106 @@
+
+  Scenario: The merged article should have one author
+    Given I am on user logout page 
+    When I fill in "user_login" with "no_admin"
+     And I fill in "user_password" with "bbbbbbbb"
+    And I press "Login"
+    Then I should be on the admin page
+    When I follow "New Article"
+    When I fill in "article_title" with "Foobar"
+    And I fill in "article__body_and_extended_editor" with "Lorem Ipsum"
+    And I press "Publish"
+    Then I should be on the admin content page
+    When I follow "Log out"
+    Then I should be on user login page 
+    When I fill in "user_login" with "admin"
+    And I fill in "user_password" with "aaaaaaaa"
+    And I press "Login"
+    Then I should be on the admin content page
+    When I follow "New Article"
+    And I fill in "article_title" with "Foobar 2"
+    And I fill in "article__body_and_extended_editor" with "Lorem Ipsum 2"
+    And I press "Publish"
+    Then I should be on the admin content page
+    When I follow "All Articles"
+    Then I should be on the manage articles page
+    When I follow "Foobar"
+    And I fill in "Merge Articles" with "2"
+    And I press "Merge" 
+    Then I should see "admin"
+    And I should see "no_admin"
+
+  Scenario: Comments on each of the two original articles need to all carry over and point to the new, merged article
+    Given I am on user logout page 
+    When I fill in "user_login" with "no_admin"
+    And I fill in "user_password" with "bbbbbbbb"
+    And I press "Login"
+    Then I should be on the admin page
+    When I follow "New Article"
+    When I fill in "article_title" with "Foobar"
+    And I fill in "article__body_and_extended_editor" with "Lorem Ipsum"
+    And I press "Publish"
+    Then I should be on the admin content page
+    When I follow "Log out"
+    Then I should be on user login page 
+    When I fill in "user_login" with "admin"
+    And I fill in "user_password" with "aaaaaaaa"
+    And I press "Login"
+    Then I should be on the admin page
+    When I follow "New article"
+    And I fill in "article_title" with "Foobar 2"
+    And I fill in "article__body_and_extended_editor" with "Lorem Ipsum 2"
+    And I press "Publish"
+    Then I should be on the admin content page
+    When I follow "All Articles"
+    Then I should be on the manage articles page
+    When I follow "Foobar"
+    And I fill in "Merge Articles" with "2"
+    And I press "Merge" 
+    Then I should see "Foobar"
+    And I should see "Foobar 2"
+
+  Scenario:The title of the new article should be the title from either one of the merged articles.
+    Given I am on user login page 
+    When I fill in "user_login" with "no_admin"
+    And I fill in "user_password" with "bbbbbbbb"
+    And I press "Login"
+    Then I should be on the admin page
+    When I follow "New Article"
+    When I fill in "article_title" with "Foobar"
+    And I fill in "article__body_and_extended_editor" with "Lorem Ipsum"
+    And I press "Publish"
+    Then I should be on the admin content page
+    When I follow "Log out"
+    Then I should be on user login page 
+    When I fill in "user_login" with "admin"
+    And I fill in "user_password" with "aaaaaaaa"
+    And I press 'Login'
+    Then I should be on the admin content page
+    When I follow "New Article"
+    And I fill in "article_title" with "Foobar 2"
+    And I fill in "article__body_and_extended_editor" with "Lorem Ipsum 2"
+    And I press "Publish"
+    Then I should be on the admin content page
+    When I follow "All Articles"
+    Then I should be on the manage articles page
+    When I follow "Foobar"
+    And I fill in "Merge Articles" with "2"
+    And I press "Merge" 
+    Then I should see "Foobar"
+    And I should see "Foobar 2"
+
+  Scenario: The form field containing the ID merge_with
+    Given I am on user login page 
+    When I fill in "user_login" with "no_admin"
+    And I fill in "user_password" with "bbbbbbbb"
+    And I press 'Login'
+    Then I should be on the admin content page	
+    When I follow "New article"
+    When I fill in "article_title" with "Foobar"
+    And I fill in "article__body_and_extended_editor" with "Lorem Ipsum"
+    And I press "Publish"
+    Then I should be on the admin content page
+    When I follow "All articles"
+    Then I should be on the manage articles page
+    When I follow "Foobar"
+    Then I should not see "merge_with"

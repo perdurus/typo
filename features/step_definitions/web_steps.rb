@@ -41,6 +41,13 @@ Given /^the blog is set up$/ do
                 :profile_id => 1,
                 :name => 'admin',
                 :state => 'active'})
+
+  User.create!({:login => 'no_admin',
+                :password => 'bbbbbbbb',
+                :email => 'alan@snow.com',
+                :profile_id => 2,
+                :name => 'no admin',
+                :state => 'active'})
 end
 
 And /^I am logged into the admin panel$/ do
@@ -53,6 +60,14 @@ And /^I am logged into the admin panel$/ do
   else
     assert page.has_content?('Login successful')
   end
+end
+
+When /^I merge "([^"]*)" with "([^"]*)"$/ do |title1, title2|
+  article1 = Article.find_by_title (title1)
+  article2 = Article.find_by_title (title2)
+
+  visit "/admin/content/edit/#{article1.id}"
+  fill_in 'merge_with', :with => article2.id
 end
 
 # Single-line step scoper
