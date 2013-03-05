@@ -84,7 +84,14 @@ class Article < Content
     article = Article.find(other_article_id)
     self.update_attributes ({:body_and_extended => self.body_and_extended + " " + article.body_and_extended})
 
-    article.destroy
+    #should carry over the comments from both merged articles
+    self.comments << article.comments
+    self.published_comments << article.published_comments
+    self.published_trackbacks << article.published_trackbacks
+    self.published_feedback << article.published_feedback
+    self.save
+
+    Article.find(other_article_id).destroy
     return self
   end
 
